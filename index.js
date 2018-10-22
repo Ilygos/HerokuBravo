@@ -26,6 +26,12 @@ app.get('/load', function(req, res) {
   	res.send("Je viens de l'an : " + (Date.now() * MILLISECONDS_TO_YEAR));
 });
 
+
+app.get('/retrievePlayerData', async function(req, res){
+  var connection    = await connect();
+  var requestResult = await retrieveFromDataBase(connection.db, "retrieveData")
+});
+
 app.get("/retrieveLevels", async function(req, res){
     var connection    = await connect();
     var requestResult = await retrieveFromDataBase(connection.db, "Levels");
@@ -44,6 +50,18 @@ function retrieveFromDataBase(db, collectionName){
     })
 }
 
+
+function retrievePlayerData(db, collectionName, playerID)
+{
+    return new Promise(
+      resole => {
+        db.db('tacticalbravo2018').collection(collectionName).find({'playerID':playerID}).toArray(async function(err, result){
+          resolve({err:err, result:result});
+        })
+      }
+    )
+}
+
 function connect() {
   return new Promise(resolve => {
       mongoDB.connect(url, { useNewUrlParser: true }, function(err, db) {
@@ -51,6 +69,10 @@ function connect() {
     });
   });
 }
+
+app.post('/upPlayerData', function(req, res){
+
+});
 
 app.post('/uplevels', function(req, res) {
     var form = req.body;
