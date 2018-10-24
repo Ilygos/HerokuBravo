@@ -27,7 +27,7 @@ app.get('/load', function(req, res) {
 });
 
 
-app.get('/retrievePlayerData', async function(req, res){
+app.post('/retrievePlayerData', async function(req, res){
   var connection    = await connect();
   var requestResult = await retrieveFromDataBase(connection.db, "retrieveData", req.body['playerID']);
 
@@ -87,9 +87,6 @@ function connect() {
   });
 }
 
-app.post('/upPlayerData', function(req, res){
-
-});
 
 app.post('/uplevels', function(req, res) {
     var form = req.body;
@@ -98,7 +95,7 @@ app.post('/uplevels', function(req, res) {
     PushDatabase(req.body, "Levels");
 });
 
-app.put('/saveData', function(req, res) {
+app.post('/upPlayerData', function(req, res) {
     console.log(req.body);
     var form = req.body;
     var obj = {playerID: form['playerID'], softcurrency: form['softcurrency'], hardcurrency: form['hardcurrency'], xpearned: form['xpearned'], energy: form['energy']};
