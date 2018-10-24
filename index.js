@@ -113,7 +113,7 @@ function PushDatas(obj, collectionName)
   });
 }
 
-function UpdateDatas(obj, collectionName)
+function UpdateDatas(obj, collectionName, playerIDStr)
 {
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
