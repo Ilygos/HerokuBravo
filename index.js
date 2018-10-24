@@ -80,16 +80,14 @@ app.post('/uplevels', function(req, res) {
 });
 
 app.post('/upPlayerData',async function(req, res) {
-  console.log(req.body);
   var form = req.body;
   var obj = {playerID: form['playerID'], softcurrency: form['softcurrency'], hardcurrency: form['hardcurrency'], xpearned: form['xpearned'], energy: form['energy']};
   var objUpdate = {$set:{playerID: form['playerID'], softcurrency: form['softcurrency'], hardcurrency: form['hardcurrency'], xpearned: form['xpearned'], energy: form['energy']}};
   var connection    = await connect();
   var result = await retrievePlayerData(connection.db, "Datas", form['playerID']);
-  console.log(form['playerID']);
   connection.db.close;
-  if (!result.length)
-    //PushDatas(obj, "Datas");
+  if (!result)
+    PushDatas(obj, "Datas");
     console.log("Chibre");
   else {
     UpdateDatas(objUpdate, "Datas", form['playerID'])
