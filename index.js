@@ -15,18 +15,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 var url = "mongodb://Maxence:maxence1@ds125713.mlab.com:25713/tacticalbravo2018";
 var MongoClient= mongoDB.MongoClient;
 
-MongoClient.connect(url, function(err, db) {
-  if (err) throw err;
-  console.log("Database created!");
-  db.close();
-});
-
-app.get('/load', function(req, res) {
-    console.log("Je fais une requete " + Date.now());
-  	res.send("Je viens de l'an : " + (Date.now() * MILLISECONDS_TO_YEAR));
-});
-
-
 app.post('/retrievePlayerData', async function(req, res){
   var connection    = await connect();
   var requestResult = await retrieveFromDataBase(connection.db, "Datas", req.body['playerID']);
@@ -54,8 +42,6 @@ app.get("/retrieveLevels", async function(req, res){
     var requestResult = await retrieveFromDataBase(connection.db, "Levels");
 
     connection.db.close();
-
-    console.log(requestResult.result[0]['levels']);
     res.send(requestResult.result[0]['levels']);
 });
 
