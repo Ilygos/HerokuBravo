@@ -21,16 +21,16 @@ app.post('/retrievePlayerData', async function(req, res){
   console.log(req.body['playerID']);
   connection.db.close();
   var response;
-  if (requestResult.length)
+  if (!requestResult)
   {
+    response = "";
+  }
+  else {
     response = requestResult.result[0]['playerID'] + "."
     + requestResult.result[0]['softcurrency'] + "."
     + requestResult.result[0]['hardcurrency']+ "."
     + requestResult.result[0]['xpearned']+ "."
     + requestResult.result[0]['energy'];
-  }
-  else {
-    response = ""
   }
   console.log(response);
   res.send(response);
@@ -59,7 +59,7 @@ function retrievePlayerData(db, collectionName, playerIDStr)
   return new Promise(
     resolve => {
       var query = {playerID:playerIDStr};
-      db.db('tacticalbravo2018').collection(collectionName).find().toArray(async function(err, result){
+      db.db('tacticalbravo2018').collection(collectionName).find(query).toArray(async function(err, result){
         resolve({err:err, result:result});
       })
     }
