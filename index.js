@@ -29,7 +29,24 @@ app.get('/load', function(req, res) {
 
 app.get('/retrievePlayerData', async function(req, res){
   var connection    = await connect();
-  var requestResult = await retrieveFromDataBase(connection.db, "retrieveData")
+  var requestResult = await retrieveFromDataBase(connection.db, "retrieveData", req.body['playerID']);
+
+  connection.db.close();
+  var response;
+  if (requestResult.length)
+  {
+  response = requestResult.result[0]['playerID'] + "."
+   + requestResult.result[0]['softcurrency'] + "."
+   + requestResult.result[0]['hardcurrency']+ "."
+   + requestResult.result[0]['xpearned']+ "."
+   + requestResult.result[0]['energy'];
+  }
+  else {
+    response = ""
+  }
+  console.log(response);
+  res.send(response);
+
 });
 
 app.get("/retrieveLevels", async function(req, res){
@@ -84,12 +101,27 @@ app.post('/uplevels', function(req, res) {
 app.put('/saveData', function(req, res) {
     console.log(req.body);
     var form = req.body;
-    PushDatabase(req.body, "Datas");
+    var obj = {playerID: form['playerID'], softcurrency: form['softcurrency'], hardcurrency: form['hardcurrency'], xpearned: form['xpearned'], energy: form['energy']};
+    PushDatas(obj, "Datas");
 });
 
 app.listen(port, () => {
   console.log('Server listening at port %d', port);
 });
+
+function PushDatas(obj, collectionName)
+{
+  MongoClient.connect(url, function(err, db) {
+  if (err) throw err;
+  var dbo = db.db("tacticalbravo2018");
+  dbo.createCollection(collectionName);
+  dbo.collection(collectionName).insertOne(obj, function(err, res) {
+    if (err) throw err;
+    console.log("1 document inserted");
+    db.close();
+  });
+});
+}
 
 function PushDatabase(obj, collectionName)
 {
