@@ -54,11 +54,12 @@ function retrieveFromDataBase(db, collectionName){
 }
 
 
-function retrievePlayerData(db, collectionName, playerID)
+function retrievePlayerData(db, collectionName, playerIDStr)
 {
     return new Promise(
       resolve => {
-        db.db('tacticalbravo2018').collection(collectionName).find({'playerID':playerID}).toArray(async function(err, result){
+        var query = {playerID:playerIDStr};
+        db.db('tacticalbravo2018').collection(collectionName).find(query).toArray(async function(err, result){
           resolve({err:err, result:result});
         })
       }
