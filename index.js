@@ -119,7 +119,7 @@ function UpdateDatas(obj, collectionName, playerIDStr)
     if (err) throw err;
     var dbo = db.db("tacticalbravo2018");
     var query = {playerID:playerIDStr};
-    dbo.collection(collectionName).updateOne(query, obj, function(err, res) {
+    levelsCollection.update(query, obj, {upsert:true}, function(err, res) {
       if (err) throw err;
       console.log("1 document updated");
       db.close();
