@@ -17,7 +17,7 @@ var MongoClient= mongoDB.MongoClient;
 
 app.post('/retrievePlayerData', async function(req, res){
   var connection    = await connect();
-  var requestResult = await retrieveFromDataBase(connection.db, "Datas", req.body['playerID']);
+  var requestResult = await retrievePlayerData(connection.db, "Datas", req.body['playerID']);
   console.log(req.body['playerID']);
   connection.db.close();
   var response;
