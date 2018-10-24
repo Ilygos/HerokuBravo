@@ -87,8 +87,9 @@ app.post('/upPlayerData',async function(req, res) {
   var result = await retrievePlayerData(connection.db, "Datas", form['playerID']);
   connection.db.close;
   if (!result)
-    PushDatas(obj, "Datas");
+  {  PushDatas(obj, "Datas");
     console.log("Chibre");
+  }
   else {
     UpdateDatas(objUpdate, "Datas", form['playerID'])
   }
