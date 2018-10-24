@@ -87,6 +87,7 @@ app.post('/upPlayerData',async function(req, res) {
   var objUpdate = {$set:{playerID: form['playerID'], softcurrency: form['softcurrency'], hardcurrency: form['hardcurrency'], xpearned: form['xpearned'], energy: form['energy']}};
   var connection    = await connect();
   var result = await retrievePlayerData(connection.db, "Datas", form['playerID']);
+  console.log(form['playerID']);
   connection.db.close;
   if (!result.length)
     PushDatas(obj, "Datas");
