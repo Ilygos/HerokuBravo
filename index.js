@@ -72,7 +72,6 @@ function connect() {
   });
 }
 
-
 app.post('/uplevels', function(req, res) {
   var form = req.body;
   console.log(form['levels']);
@@ -90,7 +89,8 @@ app.post('/upPlayerData',async function(req, res) {
   console.log(form['playerID']);
   connection.db.close;
   if (!result.length)
-    PushDatas(obj, "Datas");
+    //PushDatas(obj, "Datas");
+    console.log("Chibre");
   else {
     UpdateDatas(objUpdate, "Datas", form['playerID'])
   }
