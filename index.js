@@ -103,6 +103,7 @@ app.put('/saveData', function(req, res) {
     var form = req.body;
     var obj = {playerID: form['playerID'], softcurrency: form['softcurrency'], hardcurrency: form['hardcurrency'], xpearned: form['xpearned'], energy: form['energy']};
     PushDatas(obj, "Datas");
+    res.send("Hello c'est push !");
 });
 
 app.listen(port, () => {
