@@ -57,7 +57,7 @@ function retrieveFromDataBase(db, collectionName){
 function retrievePlayerData(db, collectionName, playerID)
 {
     return new Promise(
-      resole => {
+      resolve => {
         db.db('tacticalbravo2018').collection(collectionName).find({'playerID':playerID}).toArray(async function(err, result){
           resolve({err:err, result:result});
         })
