@@ -29,7 +29,7 @@ app.get('/load', function(req, res) {
 
 app.post('/retrievePlayerData', async function(req, res){
   var connection    = await connect();
-  var requestResult = await retrieveFromDataBase(connection.db, "retrieveData", req.body['playerID']);
+  var requestResult = await retrieveFromDataBase(connection.db, "Datas", req.body['playerID']);
 
   connection.db.close();
   var response;
