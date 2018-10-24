@@ -18,7 +18,6 @@ var MongoClient= mongoDB.MongoClient;
 app.post('/retrievePlayerData', async function(req, res){
   var connection    = await connect();
   var requestResult = await retrievePlayerData(connection.db, "Datas", req.body['playerID']);
-  console.log(req.body['playerID']);
   connection.db.close();
   var response;
   if (!requestResult)
@@ -32,7 +31,6 @@ app.post('/retrievePlayerData', async function(req, res){
     + requestResult.result[0]['xpearned']+ "."
     + requestResult.result[0]['energy'];
   }
-  console.log(response);
   res.send(response);
 
 });
@@ -82,11 +80,19 @@ app.post('/uplevels', function(req, res) {
   PushDatabase(req.body, "Levels");
 });
 
-app.post('/upPlayerData', function(req, res) {
+app.post('/upPlayerData',async function(req, res) {
   console.log(req.body);
   var form = req.body;
   var obj = {playerID: form['playerID'], softcurrency: form['softcurrency'], hardcurrency: form['hardcurrency'], xpearned: form['xpearned'], energy: form['energy']};
-  PushDatas(obj, "Datas");
+  var objUpdate = {$set:{playerID: form['playerID'], softcurrency: form['softcurrency'], hardcurrency: form['hardcurrency'], xpearned: form['xpearned'], energy: form['energy']}};
+  var connection    = await connect();
+  var result = await retrievePlayerData(connection.db, "Datas", form['playerID']);
+  connection.db.close;
+  if (!result.length)
+    PushDatas(obj, "Datas");
+  else {
+    UpdateDatas(objUpdate, "Datas", form['playerID'])
+  }
   res.send("Hello c'est push !");
 });
 
@@ -99,10 +105,23 @@ function PushDatas(obj, collectionName)
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("tacticalbravo2018");
-    dbo.createCollection(collectionName);
     dbo.collection(collectionName).insertOne(obj, function(err, res) {
       if (err) throw err;
       console.log("1 document inserted");
+      db.close();
+    });
+  });
+}
+
+function UpdateDatas(obj, collectionName)
+{
+  MongoClient.connect(url, function(err, db) {
+    if (err) throw err;
+    var dbo = db.db("tacticalbravo2018");
+    var query = {playerID:playerIDStr};
+    dbo.collection(collectionName).updateOne(query, obj, function(err, res) {
+      if (err) throw err;
+      console.log("1 document updated");
       db.close();
     });
   });
