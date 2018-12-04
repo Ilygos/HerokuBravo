@@ -21,7 +21,7 @@ app.post('/retrievePlayerData', async function(req, res){
   var requestResult = await retrievePlayerData(connection.db, "Datas", req.body['playerID']);
   connection.db.close();
   var response;
-  console.log(requestResult.result);
+  console.log(requestResult.result.length);
   if (requestResult.result.length <= 0)
   {
     response = "";
