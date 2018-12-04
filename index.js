@@ -17,9 +17,11 @@ var MongoClient= mongoDB.MongoClient;
 
 app.post('/retrievePlayerData', async function(req, res){
   var connection    = await connect();
+  console.log(req.body);
   var requestResult = await retrievePlayerData(connection.db, "Datas", req.body['playerID']);
   connection.db.close();
   var response;
+  console.log(requestResult);
   if (!requestResult)
   {
     response = "";
@@ -87,8 +89,8 @@ app.post('/upPlayerData',async function(req, res) {
   var result = await retrievePlayerData(connection.db, "Datas", form['playerID']);
   connection.db.close;
   if (!result)
-  {  PushDatas(obj, "Datas");
-    console.log("Chibre");
+  {
+    PushDatas(obj, "Datas");
   }
   else {
     UpdateDatas(objUpdate, "Datas", form['playerID'])
