@@ -22,7 +22,7 @@ app.post('/retrievePlayerData', async function(req, res){
   connection.db.close();
   var response;
   console.log(requestResult);
-  if (!requestResult)
+  if (requestResult.result.length)
   {
     response = "";
   }
