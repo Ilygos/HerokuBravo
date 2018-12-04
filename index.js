@@ -17,11 +17,9 @@ var MongoClient= mongoDB.MongoClient;
 
 app.post('/retrievePlayerData', async function(req, res){
   var connection    = await connect();
-  console.log(req.body);
   var requestResult = await retrievePlayerData(connection.db, "Datas", req.body['playerID']);
   connection.db.close();
   var response;
-  console.log(requestResult.result.length);
   if (requestResult.result.length <= 0)
   {
     response = "";
@@ -47,7 +45,7 @@ app.get("/retrieveLevels", async function(req, res){
 
 function retrieveFromDataBase(db, collectionName){
   return new Promise(resolve => {
-    db.db("tacticalbravo2018").collection(collectionName).find().toArray(async function(err, result){
+    db.db("tacticalbravo2018").collection(collectionName).findOne().toArray(async function(err, result){
       resolve({err:err, result:result});
     });
   })
@@ -59,7 +57,7 @@ function retrievePlayerData(db, collectionName, playerIDStr)
   return new Promise(
     resolve => {
       var query = {playerID:playerIDStr};
-      db.db('tacticalbravo2018').collection(collectionName).find(query).toArray(async function(err, result){
+      db.db('tacticalbravo2018').collection(collectionName).findOne(query).toArray(async function(err, result){
         resolve({err:err, result:result});
       })
     }
