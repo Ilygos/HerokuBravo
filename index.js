@@ -48,7 +48,7 @@ function retrieveFromDataBase(db, collectionName){
   return new Promise(resolve => {
     db.db("tacticalbravo2018").collection(collectionName).findOne({},(async function(err, result){
       resolve({err:err, result:result});
-    });
+    }));
   })
 }
 
