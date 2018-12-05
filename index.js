@@ -26,6 +26,7 @@ app.post('/retrievePlayerData', async function(req, res){
   }
   else {
       var json = JSON.stringify({
+      PlayerID: requestResult.result[0]['playerID'],
       SoftCurrency: requestResult.result[0]['softcurrency'],
       HardCurrency: requestResult.result[0]['hardcurrency'],
       ExpPlayer: requestResult.result[0]['xpearned'],
