@@ -25,11 +25,13 @@ app.post('/retrievePlayerData', async function(req, res){
     response = "";
   }
   else {
-    response = requestResult.result[0]['playerID'] + "."
-    + requestResult.result[0]['softcurrency'] + "."
-    + requestResult.result[0]['hardcurrency']+ "."
-    + requestResult.result[0]['xpearned']+ "."
-    + requestResult.result[0]['energy'];
+      var json = JSON.stringify({
+      SoftCurrency: requestResult.result[0]['softcurrency'],
+      HardCurrency: requestResult.result[0]['hardcurrency'],
+      ExpPlayer: requestResult.result[0]['xpearned'],
+      Energy: requestResult.result[0]['energy']
+    });
+    response = json;
   }
   res.send(response);
 
