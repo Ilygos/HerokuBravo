@@ -137,7 +137,8 @@ function PushDatabase(db, obj, collectionName)
     var dbo = db.db("tacticalbravo2018");
     return new Promise(resolve => {
       console.log(obj);
-      dbo.collection(collectionName).updateOne(obj, function(err, result) {
+      var query = { $first: "$levels" };
+      dbo.collection(collectionName).updateOne( ,obj, function(err, result) {
         resolve({err:err, result:result});
       });
     })
