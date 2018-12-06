@@ -140,5 +140,4 @@ function PushDatabase(db, obj, collectionName)
         resolve({err:err, result:result});
       });
     })
-  });
 }
