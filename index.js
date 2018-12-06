@@ -74,7 +74,7 @@ function connect() {
   });
 }
 
-app.post('/uplevels', function(req, res) {
+app.post('/uplevels', async function(req, res) {
   var form = req.body;
   console.log(form['levels']);
   var connection    = await connect();
