@@ -134,9 +134,7 @@ function PushDatabase(obj, collectionName)
   MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("tacticalbravo2018");
-    dbo.collection(collectionName).drop();
-    dbo.createCollection(collectionName);
-    dbo.collection(collectionName).insertOne(obj, function(err, res) {
+    dbo.collection(collectionName).updateOne(obj, function(err, res) {
       if (err) throw err;
       console.log("1 document inserted");
       db.close();
