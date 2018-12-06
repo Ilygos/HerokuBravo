@@ -136,7 +136,7 @@ function PushDatabase(db, obj, collectionName)
 {
     var dbo = db.db("tacticalbravo2018");
     return new Promise(resolve => {
-      var myquery = {};
+      var myquery = { levels: { $not: { $eq : "" } } };
       dbo.collection(collectionName).updateOne(myquery, obj, function(err, result) {
         resolve({err:err, result:result});
       });
