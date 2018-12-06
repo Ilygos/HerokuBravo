@@ -77,8 +77,10 @@ function connect() {
 app.post('/uplevels', function(req, res) {
   var form = req.body;
   console.log(form['levels']);
+  var connection    = await connect();
+  var requestResult = await PushDatabase(connection.db,req.body, "Levels");
+  connection.db.close();
   res.send( form['levels']);
-  PushDatabase(req.body, "Levels");
 });
 
 app.post('/upPlayerData',async function(req, res) {
@@ -129,15 +131,14 @@ function UpdateDatas(obj, collectionName, playerIDStr)
   });
 }
 
-function PushDatabase(obj, collectionName)
+function PushDatabase(db, obj, collectionName)
 {
-  MongoClient.connect(url, function(err, db) {
-    if (err) throw err;
     var dbo = db.db("tacticalbravo2018");
-    dbo.collection(collectionName).updateOne(obj, function(err, res) {
-      if (err) throw err;
-      console.log("1 document inserted");
-      db.close();
-    });
+    return new Promise(resolve => {
+      var myquery = {};
+      dbo.collection(collectionName).updateOne(myquery, obj, function(err, res) {
+        resolve({err:err, result:result});
+      });
+    }
   });
 }
