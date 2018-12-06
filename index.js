@@ -42,7 +42,7 @@ app.get("/retrieveLevels", async function(req, res){
   var requestResult = await retrieveFromDataBase(connection.db, "Levels");
 
   connection.db.close();
-  console.log(requestResult.result);
+  console.log(requestResult.result['levels']);
   res.send(requestResult.result['levels']);
 });
 
