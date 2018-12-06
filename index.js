@@ -139,6 +139,6 @@ function PushDatabase(db, obj, collectionName)
       dbo.collection(collectionName).updateOne(myquery, obj, function(err, res) {
         resolve({err:err, result:result});
       });
-    }
+    })
   });
 }
